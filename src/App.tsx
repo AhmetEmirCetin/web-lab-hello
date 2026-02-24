@@ -11,10 +11,8 @@ function App() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -31,16 +29,16 @@ function App() {
         </p>
       </header>
 
-      <section className="card">
-        <h2>Hakkımda</h2>
+      <section className="card" aria-labelledby="about-title">
+        <h2 id="about-title">Hakkımda</h2>
         <p>
           Yazılım mühendisliği öğrencisiyim ve veri alanında uzmanlaşmak
           istiyorum. Arabalar ve motor teknolojilerine ilgim var.
         </p>
       </section>
 
-      <section className="card">
-        <h2>Hobilerim</h2>
+      <section className="card" aria-labelledby="hobby-title">
+        <h2 id="hobby-title">Hobilerim</h2>
         <ul>
           <li>Araba incelemek</li>
           <li>Motor sürmek</li>
@@ -49,15 +47,17 @@ function App() {
         </ul>
       </section>
 
-      <section className="card">
-        <h2>İletişim</h2>
-        <form onSubmit={handleSubmit} noValidate>
+      <section className="card" aria-labelledby="contact-title">
+        <h2 id="contact-title">İletişim</h2>
+
+        <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="name">Ad Soyad</label>
             <input
               id="name"
               type="text"
               name="name"
+              autoComplete="name"
               value={formData.name}
               onChange={handleChange}
               required
@@ -70,6 +70,7 @@ function App() {
               id="email"
               type="email"
               name="email"
+              autoComplete="email"
               value={formData.email}
               onChange={handleChange}
               required
@@ -87,12 +88,14 @@ function App() {
             />
           </div>
 
-          <button type="submit">Gönder</button>
+          <button type="submit" aria-label="İletişim formunu gönder">
+            Gönder
+          </button>
         </form>
       </section>
 
       <footer className="footer">
-        <p>© 2026 Ahmet Emir ÇETİN</p>
+        <small>© 2026 Ahmet Emir ÇETİN</small>
       </footer>
     </main>
   );
